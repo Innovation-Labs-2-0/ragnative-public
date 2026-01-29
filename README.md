@@ -151,19 +151,7 @@ CORS_ORIGINS=http://localhost:3000,http://xx.xx.xx.xx:3000
 
 ---
 
-### 2️⃣ Frontend Configuration – package.json
-
-Open `frontend/package.json` and update the proxy value:
-
-```json
-"proxy": "http://<YOUR_SERVER_IP>:9000"
-```
-
-📌 This ensures frontend API calls are correctly forwarded to the backend.
-
----
-
-### 3️⃣ Frontend Environment File (.env)
+### 2️⃣ Frontend Environment File (.env)
 
 Open `frontend/.env` and update:
 
