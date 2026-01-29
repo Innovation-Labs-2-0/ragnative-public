@@ -39,17 +39,9 @@ git --version
 Clone the repository provided to you:
 
 ```bash
-git clone <REPO_URL>
-cd <REPO_NAME>
+git clone https://github.com/Innovation-Labs-2-0/ragnative-public.git
+cd ragnative-public
 ```
-
-Example:
-
-```bash
-git clone https://github.com/your-org/rag-platform-runtime.git
-cd rag-platform-runtime
-```
-
 ---
 
 ## 🔐 Step 2: Generate Machine Fingerprint
@@ -133,7 +125,57 @@ license.txt
 
 ---
 
-## 🐳 Step 5: Start the Application Using Docker
+## 🔧 Step 5: Update Configuration (IMPORTANT)
+
+Before starting the application, **you must update configuration values to match your server IP or domain**.
+
+### 1️⃣ Backend Configuration (docker-compose.yml)
+
+Open `docker-compose.yml` and update the following environment variables **with your server IP or domain**:
+
+```yaml
+BASE_URL=http://<YOUR_SERVER_IP>:3000
+CORS_ORIGINS=http://<YOUR_SERVER_IP>:3000
+```
+
+📌 Notes:
+
+* Replace `<YOUR_SERVER_IP>` with the actual IP or domain of your server
+* `CORS_ORIGINS` **must not be a JSON array** — use a comma-separated value if multiple origins are required
+
+Example:
+
+```yaml
+CORS_ORIGINS=http://localhost:3000,http://xx.xx.xx.xx:3000
+```
+
+---
+
+### 2️⃣ Frontend Configuration – package.json
+
+Open `frontend/package.json` and update the proxy value:
+
+```json
+"proxy": "http://<YOUR_SERVER_IP>:9000"
+```
+
+📌 This ensures frontend API calls are correctly forwarded to the backend.
+
+---
+
+### 3️⃣ Frontend Environment File (.env)
+
+Open `frontend/.env` and update:
+
+```env
+REACT_APP_API_BASE_URL=http://<YOUR_SERVER_IP>:9000
+```
+
+📌 This value **must point to the backend server** and match the backend port.
+
+---
+
+## 🐳 Step 6: Start the Application Using Docker
 
 Once the license is in place, start the application:
 
@@ -157,12 +199,6 @@ This command will:
 
   ```
   http://<SERVER_IP>:3000
-  ```
-
-* **Backend API**:
-
-  ```
-  http://<SERVER_IP>:9000
   ```
 
 ---

@@ -5,11 +5,11 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: rag-frontend
+    container_name: ragnative-frontend
     ports:
       - "3000:3000"
     environment:
-      - REACT_APP_API_URL=http://rag-backend:9000
+      - REACT_APP_API_URL=http://ragnative-backend:9000
     depends_on:
       - backend
     networks:
@@ -17,9 +17,9 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./
       dockerfile: Dockerfile
-    container_name: rag-backend
+    container_name: ragnative-backend
     ports:
       - "9000:9000"
     environment:
@@ -29,10 +29,10 @@ services:
       - DATABASE_NAME=rag_platform_dev
       - CHROMA_HTTP_HOST=chromadb
       - CHROMA_HTTP_PORT=8000
-      - BASE_URL=http://144.24.122.250:3000
+      - BASE_URL=http://<YOUR_SERVER_IP>:3000
       - REDIS_URL=redis://redis:6379/0
       - CHROMA_DB_URL=http://chromadb:8000
-      - CORS_ORIGINS=["http://localhost:3000","http://144.24.122.250:3000"]
+      - CORS_ORIGINS=["http://localhost:3000","http://<YOUR_SERVER_IP>:3000"]
       - FERNET_KEY=w5bCO7jZ2w_YDCDJY0IMUzMDySFUQwUW6M2W9XBe8p0=
       - REDIS_HOST=redis
       - REDIS_PORT=6379
