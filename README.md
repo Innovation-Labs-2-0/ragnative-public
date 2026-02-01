@@ -104,7 +104,9 @@ Send the generated **JSON fingerprint file** to the product/support team.
 
 ---
 
-## 📄 Step 4: Add the License File
+## 📄 Step 4: Add the License File and executable file 
+
+### Step 4.1: Add the License File 
 
 After you receive the license:
 
@@ -121,6 +123,24 @@ with the **license file provided to you**.
 
 ```
 license.txt
+```
+
+
+### 🧩 Step 4.1: Place the Backend Executable (IMPORTANT)
+
+Along with the license file, you will receive a backend executable file.
+The executable must be placed in the root directory of the repository, at the same level as:
+
+```bash
+ragnative-public/
+├─ Dockerfile
+├─ docker-compose.yml
+├─ README.md
+├─ app_exe        ← Backend executable (IMPORTANT)
+├─ licenses/
+│  └─ license.txt
+├─ dumps/
+├─ frontend/
 ```
 
 ---
