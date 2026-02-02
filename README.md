@@ -161,12 +161,12 @@ CORS_ORIGINS=http://<YOUR_SERVER_IP>:3000
 📌 Notes:
 
 * Replace `<YOUR_SERVER_IP>` with the actual IP or domain of your server
-* `CORS_ORIGINS` **must not be a JSON array** — use a comma-separated value if multiple origins are required
+* `CORS_ORIGINS` — use a comma-separated value if multiple origins are required
 
 Example:
 
 ```yaml
-CORS_ORIGINS=http://localhost:3000,http://xx.xx.xx.xx:3000
+CORS_ORIGINS=[http://localhost:3000,http://xx.xx.xx.xx:3000]
 ```
 
 ---
@@ -181,8 +181,6 @@ REACT_APP_API_BASE_URL=http://<YOUR_SERVER_IP>:9000
 
 📌 This value **must point to the backend server** and match the backend port.
 
-
-Here’s a **simple, clean point** that fits perfectly into your existing **Step 5** section and is safe to copy-paste.
 
 ---
 
