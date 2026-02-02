@@ -98,9 +98,13 @@ This command generates a **JSON file** containing a **hashed machine fingerprint
 
 ## 📤 Step 3: Send Fingerprint to Us
 
-Send the generated **JSON fingerprint file** to the product/support team.
+Send the generated **JSON fingerprint file** to the product/support team via email.
+
+📧 **Email:** **[ innovation.labs@jadeglobal.com ]**
 
 ➡️ We will use this fingerprint to generate a **license file** for your system.
+
+**Note: We will share the license file and executable app with you via email.**
 
 ---
 
@@ -166,7 +170,7 @@ CORS_ORIGINS=http://<YOUR_SERVER_IP>:3000
 Example:
 
 ```yaml
-CORS_ORIGINS=[http://localhost:3000,http://xx.xx.xx.xx:3000]
+CORS_ORIGINS=[http://xx.xx.xx.xx:3000,http://xx.xx.xx.xx:3000]
 ```
 
 ---

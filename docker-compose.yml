@@ -32,7 +32,7 @@ services:
       - BASE_URL=http://<YOUR_SERVER_IP>:3000
       - REDIS_URL=redis://redis:6379/0
       - CHROMA_DB_URL=http://chromadb:8000
-      - CORS_ORIGINS=["http://localhost:3000","http://<YOUR_SERVER_IP>:3000"]
+      - CORS_ORIGINS=["http://<YOUR_SERVER_IP>:3000"]
       - FERNET_KEY=w5bCO7jZ2w_YDCDJY0IMUzMDySFUQwUW6M2W9XBe8p0=
       - REDIS_HOST=redis
       - REDIS_PORT=6379

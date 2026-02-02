@@ -19,10 +19,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 
-COPY app_exe /app_exe
-RUN chmod +x /app_exe
+COPY <BACKEND_EXECUTABLE_NAME> /<BACKEND_EXECUTABLE_NAME>
+RUN chmod +x /<BACKEND_EXECUTABLE_NAME> 
 
 
 EXPOSE 9000
 
-CMD ["./app_exe"]
+CMD ["./<BACKEND_EXECUTABLE_NAME>"]
