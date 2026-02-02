@@ -181,6 +181,26 @@ REACT_APP_API_BASE_URL=http://<YOUR_SERVER_IP>:9000
 
 📌 This value **must point to the backend server** and match the backend port.
 
+
+Here’s a **simple, clean point** that fits perfectly into your existing **Step 5** section and is safe to copy-paste.
+
+---
+
+### 3️⃣ Backend Dockerfile Configuration (IMPORTANT)
+
+Open the `Dockerfile` located **next to `docker-compose.yml`** and ensure the executable name matches **exactly** the backend executable file provided to you.
+
+Update the following lines **by replacing `app_exe` with the actual executable name** you received:
+
+```dockerfile
+COPY <BACKEND_EXECUTABLE_NAME> /<BACKEND_EXECUTABLE_NAME>
+RUN chmod +x /<BACKEND_EXECUTABLE_NAME>
+
+EXPOSE 9000
+
+CMD ["./<BACKEND_EXECUTABLE_NAME>"]
+```
+
 ---
 
 ## 🐳 Step 6: Start the Application Using Docker
