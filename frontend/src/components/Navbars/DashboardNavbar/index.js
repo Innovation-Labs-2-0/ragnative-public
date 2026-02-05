@@ -89,12 +89,15 @@ function DashboardNavbar({ absolute, light, isMini, routes }) {
   const handleConfiguratorOpen = () => setDarkMode(dispatch, !darkMode);
 
   // Styles for the navbar icons
-  const iconsStyle = ({ palette: { dark, white, text }, functions: { rgba } }) => ({
+  const iconsStyle = ({
+    palette: { dark, secondary, black, white, text },
+    functions: { rgba },
+  }) => ({
     color: () => {
-      let colorValue = light || darkMode ? white.main : white.main;
+      let colorValue = light || darkMode ? dark.main : black.light; //secondary to sidebar
 
       if (transparentNavbar && !light) {
-        colorValue = darkMode ? rgba(white.main, 0.6) : white.main;
+        colorValue = darkMode ? rgba(white.main, 0.6) : dark.main;
       }
 
       return colorValue;
@@ -155,7 +158,7 @@ function DashboardNavbar({ absolute, light, isMini, routes }) {
               <MDBox color="white">
                 <IconButton color="inherit" onClick={openProfileMenu} size="large" disableRipple>
                   <Tooltip title="User Profile">
-                    <Icon sx={{ iconsStyle }}>account_circle</Icon>
+                    <Icon sx={iconsStyle}>account_circle</Icon>
                   </Tooltip>
                 </IconButton>
                 {renderProfileMenu()}

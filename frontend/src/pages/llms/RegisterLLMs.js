@@ -37,6 +37,7 @@ const RegisterLLMs = ({
   isModalMode = false,
   onClose,
   fetchLLMsList,
+  isOwner = false,
 }) => {
   const llmTypes = ["Chat", "Embedding"];
   const [providersList, setProvidersList] = useState([]);
@@ -50,6 +51,7 @@ const RegisterLLMs = ({
   const [connSuccess, setConnSuccess] = useState();
   const [teamsList, setTeamsList] = useState([]);
 
+  const canEdit = !isEdit || isOwner;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -340,6 +342,7 @@ const RegisterLLMs = ({
               value={formData.name}
               onChange={handleFieldChange}
               success={connSuccess}
+              disabled={!canEdit}
               required
               placeholder="Provide a custom name for LLM"
             />
@@ -357,6 +360,7 @@ const RegisterLLMs = ({
                 }}
                 value={formData.type}
                 name="type"
+                disabled={!canEdit}
                 onChange={handleTypeChange}
               >
                 {llmTypes.map((type) => (
@@ -381,6 +385,7 @@ const RegisterLLMs = ({
                 }}
                 value={formData.provider}
                 name="provider"
+                disabled={!canEdit}
                 onChange={handleProviderChange}
               >
                 {providersList.map((provider) => (
@@ -399,6 +404,7 @@ const RegisterLLMs = ({
               name="model"
               value={formData.model}
               onChange={handleFieldChange}
+              disabled={!canEdit}
               placeholder="e.g., gpt-4o, gemini-2.5-pro"
               required
             />
@@ -408,6 +414,7 @@ const RegisterLLMs = ({
               configSchema={currentConfigSchema}
               formData={formData.config}
               onChange={handleConfigChange}
+              disableAll={!canEdit}
             />
           )}
 
@@ -417,6 +424,7 @@ const RegisterLLMs = ({
                 size="small"
                 exclusive
                 value={formData.public_llm}
+                disabled={!canEdit}
                 onChange={(e, value) => handleTogglePublicLLM(e, value)}
                 aria-label="Public LLM"
                 sx={{ height: "45px" }}
@@ -450,13 +458,20 @@ const RegisterLLMs = ({
                   id="team-multi-chip"
                   multiple
                   value={formData.teams}
+                  disabled={!canEdit}
                   onChange={(e) => handleTeamsChange(e)}
                   input={<OutlinedInput id="select-multiple-chip" label="Select Teams" />}
                   renderValue={(selected) => (
                     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                       {selected.map((teamId) => {
                         const team = teamsList.find((t) => t.value === teamId);
-                        return <Chip key={teamId} label={team?.label || teamId} />;
+                        return (
+                          <Chip
+                            sx={{ color: "text.main" }}
+                            key={teamId}
+                            label={team?.label || teamId}
+                          />
+                        );
                       })}
                     </Box>
                   )}
@@ -472,45 +487,47 @@ const RegisterLLMs = ({
             </Grid>
           )}
 
-          <Grid item xs={12}>
-            <Stack direction="row" justifyContent="flex-end" spacing={2} mt={2}>
-              <SecureButton
-                buttonKey="/button/test-llm-connection"
-                variant="outlined"
-                color="primary"
-                size="small"
-                onClick={handleTestConnection}
-                disabled={testDisabled}
-                startIcon={
-                  testDisabled ? (
-                    <CircularProgress color="inherit" size={20} sx={{ mr: 1 }} />
-                  ) : null
-                }
-              >
-                Test Connection
-              </SecureButton>
+          {canEdit && (
+            <Grid item xs={12}>
+              <Stack direction="row" justifyContent="flex-end" spacing={2} mt={2}>
+                <SecureButton
+                  buttonKey="/button/test-llm-connection"
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  onClick={handleTestConnection}
+                  disabled={testDisabled}
+                  startIcon={
+                    testDisabled ? (
+                      <CircularProgress color="inherit" size={20} sx={{ mr: 1 }} />
+                    ) : null
+                  }
+                >
+                  Test Connection
+                </SecureButton>
 
-              <MDButton variant="contained" color="secondary" size="small">
-                Cancel
-              </MDButton>
+                <MDButton variant="contained" color="secondary" size="small" onClick={handleCancel}>
+                  Cancel
+                </MDButton>
 
-              <SecureButton
-                buttonKey="/button/register-llm"
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={handleSubmit}
-                disabled={saveDisabled}
-                startIcon={
-                  saveDisabled ? (
-                    <CircularProgress color="inherit" size={20} sx={{ mr: 1 }} />
-                  ) : null
-                }
-              >
-                {isModalMode ? "Update LLM" : "Save LLM"}
-              </SecureButton>
-            </Stack>
-          </Grid>
+                <SecureButton
+                  buttonKey="/button/register-llm"
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={handleSubmit}
+                  disabled={saveDisabled}
+                  startIcon={
+                    saveDisabled ? (
+                      <CircularProgress color="inherit" size={20} sx={{ mr: 1 }} />
+                    ) : null
+                  }
+                >
+                  {isModalMode ? "Update LLM" : "Save LLM"}
+                </SecureButton>
+              </Stack>
+            </Grid>
+          )}
         </Grid>
       </>
     );
@@ -534,6 +551,7 @@ RegisterLLMs.propTypes = {
   onClose: PropTypes.func,
   isModalMode: PropTypes.bool,
   fetchLLMsList: PropTypes.func,
+  isOwner: PropTypes.bool,
 };
 
 export default RegisterLLMs;

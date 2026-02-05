@@ -2,16 +2,16 @@ function collapseItem(theme, ownerState) {
   const { palette, transitions, breakpoints, boxShadows, borders, functions } = theme;
   const { active, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = ownerState;
 
-  const { white, transparent, secondary, grey } = palette;
+  const { white, transparent, text, secondary, grey } = palette;
   const { md } = boxShadows;
   const { borderRadius } = borders;
   const { pxToRem, rgba, linearGradient } = functions;
 
   return {
-    background: active ? "#598cbe" : transparent.main,
+    background: active ? "#f9f9f9" : transparent.main,
     display: "flex",
-    borderLeft: active ? "6px solid #eff1f4;" : "3px solid transparent",
-    color: "#f9fbfdff",
+    borderLeft: active ? "6px solid #94a3b8;" : "3px solid transparent",
+    color: text.main,
 
     alignItems: "center",
     width: "100%",
@@ -37,7 +37,7 @@ function collapseItem(theme, ownerState) {
           backgroundValue =
             transparentSidenav && !darkMode
               ? secondary.main
-              : rgba(whiteSidenav ? grey[400] : white.main, 0.2);
+              : rgba(whiteSidenav ? grey[600] : text.main, 0.2);
         }
 
         return backgroundValue;
@@ -48,9 +48,9 @@ function collapseItem(theme, ownerState) {
 
 function collapseIconBox(theme, ownerState) {
   const { palette, transitions, borders, functions } = theme;
-  const { transparentSidenav, whiteSidenav, darkMode, active } = ownerState;
+  const { transparentSidenav, secondary, whiteSidenav, darkMode, active } = ownerState;
 
-  const { white, dark } = palette;
+  const { white, dark, text } = palette;
   const { borderRadius } = borders;
   const { pxToRem } = functions;
 
@@ -59,8 +59,8 @@ function collapseIconBox(theme, ownerState) {
     minHeight: pxToRem(32),
     color:
       (transparentSidenav && !darkMode && !active) || (whiteSidenav && !active)
-        ? dark.main
-        : white.main,
+        ? text.main
+        : text.main,
     borderRadius: borderRadius.md,
     display: "grid",
     placeItems: "center",
@@ -70,7 +70,7 @@ function collapseIconBox(theme, ownerState) {
     }),
 
     "& svg, svg g": {
-      color: transparentSidenav || whiteSidenav ? dark.main : white.main,
+      color: transparentSidenav || whiteSidenav ? dark.main : secondary,
     },
   };
 }
@@ -83,7 +83,7 @@ function collapseText(theme, ownerState) {
   const { typography, transitions, breakpoints, functions } = theme;
   const { miniSidenav, transparentSidenav, active } = ownerState;
 
-  const { size, fontWeightRegular, fontWeightLight } = typography;
+  const { size, fontWeightRegular, fontWeightMedium } = typography;
   const { pxToRem } = functions;
 
   return {
@@ -100,7 +100,7 @@ function collapseText(theme, ownerState) {
     },
 
     "& span": {
-      fontWeight: active ? fontWeightRegular : fontWeightLight,
+      fontWeight: active ? fontWeightMedium : fontWeightRegular,
       fontSize: size.sm,
       lineHeight: 0,
     },

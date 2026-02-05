@@ -1,6 +1,7 @@
 import axios from "axios";
 import { clearUserData } from "./authUtil";
 import store from "../store";
+import { setLicenseError } from "../slices/licenseSlice";
 
 const apiClient = axios.create({
   baseURL: `${process.env.REACT_APP_API_BASE_URL}/api`,
@@ -75,6 +76,16 @@ apiClient.interceptors.response.use(
         clearUserData(store.dispatch);
         return Promise.reject(refreshErr);
       }
+    }
+
+    if (error.response?.status === 402) {
+      const errorData = error.response.data;
+      store.dispatch(
+        setLicenseError({
+          type: errorData.error_type.toLowerCase().replace("license_", ""),
+          message: errorData.message,
+        })
+      );
     }
 
     return Promise.reject(error);

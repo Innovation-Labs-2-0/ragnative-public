@@ -113,7 +113,7 @@ function URLSourceForm({
       } else {
         await saveDiscoverableURLDataSource();
       }
-    } catch {
+    } catch (error) {
       console.log("Error while Saving URL Data Source", error);
     } finally {
       setIsSaving(false);

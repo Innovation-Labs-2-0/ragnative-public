@@ -44,6 +44,7 @@ import { InputAdornment, IconButton, Tooltip } from "@mui/material";
  *     description: "Enter the hostname or IP address",
  *     type: "text",
  *     display_size: 6
+ *     disabled: true
  *   },
  *   port: {
  *     label: "Port Number",
@@ -63,7 +64,7 @@ import { InputAdornment, IconButton, Tooltip } from "@mui/material";
  *   </Grid>
  * );
  */
-function DynamicFields({ configSchema, formData, onChange }) {
+function DynamicFields({ configSchema, formData, onChange, disableAll = false }) {
   const [showPasswords, setShowPasswords] = useState({});
   const handleTogglePasswordVisibility = (name) => {
     setShowPasswords((prev) => ({
@@ -115,6 +116,7 @@ function DynamicFields({ configSchema, formData, onChange }) {
               type={inputType}
               InputProps={inputProps}
               required={schema.required}
+              disabled={schema.disabled ? schema.disabled : disableAll}
             />
           </Grid>
         );
@@ -127,6 +129,7 @@ DynamicFields.propTypes = {
   configSchema: PropTypes.object,
   onChange: PropTypes.func,
   formData: PropTypes.object,
+  disableAll: PropTypes.bool,
 };
 
 export default DynamicFields;

@@ -5,7 +5,7 @@
 
 const colors = {
   background: {
-    default: "#d8e1ef",
+    default: "#f3f2f2ff",
   },
 
   text: {
@@ -122,8 +122,8 @@ const colors = {
     },
 
     dark: {
-      main: "#1b568e",
-      state: "#191919",
+      main: "#f7f5f5f5",
+      state: "#f7f5f5f5",
     },
   },
 
@@ -201,7 +201,7 @@ const colors = {
     },
 
     info: {
-      background: "#aecef7",
+      background: "#f2f3f4ff",
       text: "#095bc6",
     },
 

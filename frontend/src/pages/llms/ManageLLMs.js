@@ -66,19 +66,28 @@ function ManageLLMs() {
 
       <Grid container spacing={3} sx={{ mt: 1 }}>
         {visibleLLMs.map((llm) => (
-          <Grid item xs={12} sm={6} md={4} key={llm._id.$oid}>
+          <Grid item xs={12} sm={6} md={4} key={llm.id}>
             <DynamicCardContext.Provider value={expandedCardState}>
               <DynamicCard
-                id={llm._id}
+                id={llm.id}
                 title={llm.name}
                 subheader={llm.provider.toUpperCase()}
                 headerIcon={
                   PROVIDER_ICON_MAP[llm.provider.toLowerCase()] || PROVIDER_ICON_MAP.default
                 }
-                mainFields={{ layout: "grid", fields: [{ label: "Model", value: llm.model }] }}
-                defaultActions={{
-                  edit: { enabled: true, onClick: () => handleViewLLM(llm._id) },
+                mainFields={{
+                  layout: "grid",
+                  fields: [{ label: "Model", value: llm.model }],
                 }}
+                defaultActions={
+                  llm.is_owner
+                    ? {
+                        edit: { enabled: true, onClick: () => handleViewLLM(llm.id) },
+                      }
+                    : {
+                        view: { enabled: true, onClick: () => handleViewLLM(llm.id) },
+                      }
+                }
                 createdAt={{
                   enabled: true,
                   date: new Date(llm.created_at).toISOString().slice(0, 19).replace("T", " "),
@@ -88,6 +97,7 @@ function ManageLLMs() {
                   layout: "grid",
                   fields: [
                     { label: "LLM Type ", value: llm.type === "chat" ? "Chat" : "Embedding" },
+                    { label: "Owner ", value: llm.owner.name },
                     { label: "Public ", value: llm.public_llm ? "Yes" : "No" },
                     { label: "Active ", value: llm.active ? "Yes" : "No" },
                   ],
@@ -126,6 +136,7 @@ function ManageLLMs() {
           selectedLLM={selectedLLMId}
           onClose={() => setSelectedLLMId("")}
           fetchLLMsList={fetchLLMs}
+          isOwner={llms.find((llm) => llm.id === selectedLLMId)?.is_owner}
         ></EditLLM>
       )}
     </DashboardLayout>

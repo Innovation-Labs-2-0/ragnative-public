@@ -21,7 +21,7 @@ const appBar = {
           BorderColor: "black",
           borderBottom: "1px solid rgba(255,255,255,0.3)",
           margin: 0,
-          background: linearGradient(gradients.dark.state, "#2264a2"),
+          background: linearGradient(gradients.light.background, gradients.light.background),
           boxShadow: "none",
           paddingLeft: sidebarWidth,
           mb: 14,

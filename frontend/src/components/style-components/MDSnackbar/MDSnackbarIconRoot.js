@@ -33,7 +33,7 @@ export default styled(Icon)(({ theme, ownerState }) => {
       ? linearGradient(gradients[color].main, gradients[color].state)
       : linearGradient(gradients.info.main, gradients.info.state);
   } else if (color === "light") {
-    backgroundImageValue = linearGradient(gradients.dark.main, gradients.dark.state);
+    backgroundImageValue = linearGradient(gradients.dark.main, gradients.dark.main);
   }
 
   return {

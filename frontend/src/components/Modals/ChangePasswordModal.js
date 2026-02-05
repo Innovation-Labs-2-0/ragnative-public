@@ -78,6 +78,7 @@ const ChangePasswordModal = ({ open, onClose }) => {
   useEffect(() => {
     setValidations(validatePassword(newPassword));
   }, [newPassword]);
+
   useEffect(() => {
     if (open) {
       setPassword("");
@@ -138,14 +139,14 @@ const ChangePasswordModal = ({ open, onClose }) => {
         new_password: newPassword,
       });
 
-      if (response.message === "Password updated successfully") {
+      if (response.status === "success") {
         handleAlert("Password updated successfully!", "success", 3000);
         setPassword("");
         setNewPassword("");
         setConfirmPassword("");
         setTimeout(() => {
           handleChangePasswordLogout();
-        }, 3000);
+        }, 2000);
       } else {
         handleAlert("Failed to change password", "error", 5000);
       }

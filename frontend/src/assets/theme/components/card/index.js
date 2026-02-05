@@ -26,7 +26,7 @@ const card = {
       "&.manage-bots-card": {
         margin: 2,
         minHeight: 440,
-        backgroundColor: "#e9e9e9ff",
+        backgroundColor: "#f6f4f4ff",
       },
     },
 

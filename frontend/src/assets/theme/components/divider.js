@@ -20,7 +20,7 @@ import colors from "assets/theme/base/colors";
 import rgba from "assets/theme/functions/rgba";
 import pxToRem from "assets/theme/functions/pxToRem";
 
-const { dark, transparent, white } = colors;
+const { dark, transparent, black, white } = colors;
 
 const divider = {
   styleOverrides: {
@@ -50,8 +50,8 @@ const divider = {
 
     light: {
       backgroundColor: transparent.main,
-      backgroundImage: `linear-gradient(to right, ${rgba(white.main, 0)}, ${white.main}, ${rgba(
-        white.main,
+      backgroundImage: `linear-gradient(to right, ${rgba(black.light, 0)}, ${black.light}, ${rgba(
+        black.light,
         0
       )}) !important`,
 

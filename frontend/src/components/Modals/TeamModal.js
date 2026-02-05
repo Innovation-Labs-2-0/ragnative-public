@@ -178,9 +178,12 @@ const TeamModal = ({ open, onClose, onSuccess, teamToEdit, currentUserId }) => {
                   value.map((option, index) => (
                     <Chip
                       key={option._id}
-                      variant="outlined"
+                      variant="filled"
                       label={option.name}
                       {...getTagProps({ index })}
+                      sx={{
+                        backgroundColor: "#9fa5b8ff !important",
+                      }}
                       disabled={isEditMode && option._id === teamToEdit.owner.id}
                     />
                   ))

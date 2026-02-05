@@ -122,7 +122,7 @@ const routes = [
   {
     type: "collapse",
     name: "Teams",
-    key: "manage-teams",
+    key: "teams",
     icon: <Icon fontSize="small">groups</Icon>,
     route: "/teams",
     component: <ManageTeams />,

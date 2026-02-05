@@ -20,7 +20,7 @@ const WidgetsGrid = () => {
     fetchCount();
   }, []);
   const widgetMetaData = [
-    { id: 1, title: "TOTAL BOTS", color: "dark", icon: <Bot size={30} />, key: "total_bots" },
+    { id: 1, title: "TOTAL BOTS", color: "info", icon: <Bot size={30} />, key: "total_bots" },
     {
       id: 2,
       title: "ACTIVE BOTS",

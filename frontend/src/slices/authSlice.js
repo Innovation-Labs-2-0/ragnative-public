@@ -41,6 +41,10 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.permissions = defaultEmptyPermissions;
+
+      storage.removeItem("isAuthenticated");
+      storage.removeItem("permissions");
+      storage.removeItem("user");
     },
   },
 });

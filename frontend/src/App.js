@@ -5,6 +5,7 @@ import routes from "routes";
 import ProtectedRoute from "utils/ProtectedRoute";
 import React from "react";
 import { PUBLIC_ROUTE_KEYS } from "utils/constants";
+import LicenseModal from "components/Modals/LicenseModal";
 
 export default function App() {
   const renderPublicRoutes = (allRoutes) =>
@@ -31,21 +32,24 @@ export default function App() {
       .filter(Boolean);
 
   return (
-    <Routes>
-      <Route path="/embed/:botId/version/:botVersion" element={<EmbedPage />} />
+    <>
+      <LicenseModal />
+      <Routes>
+        <Route path="/embed/:botId/version/:botVersion" element={<EmbedPage />} />
 
-      {renderPublicRoutes(routes)}
+        {renderPublicRoutes(routes)}
 
-      <Route
-        element={
-          <ProtectedRoute>
-            <MainLayout />
-          </ProtectedRoute>
-        }
-      >
-        {renderProtectedMainLayoutRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Route>
-    </Routes>
+        <Route
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+          {renderProtectedMainLayoutRoutes(routes)}
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        </Route>
+      </Routes>
+    </>
   );
 }

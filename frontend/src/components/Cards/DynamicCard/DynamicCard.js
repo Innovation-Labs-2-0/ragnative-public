@@ -9,7 +9,7 @@ import {
   Chip,
   Collapse,
 } from "@mui/material";
-import { Edit, Delete, ExpandMore, CalendarToday, Memory } from "@mui/icons-material";
+import { Edit, Delete, ExpandMore, CalendarToday, Memory, RemoveRedEye } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import { useDynamicCardContext } from "context/DynamicCardContext";
 
@@ -118,6 +118,18 @@ function DynamicCard({
                     sx={{ margin: "4px" }}
                   >
                     <Edit fontSize="16px" />
+                  </IconButton>
+                </Tooltip>
+              )}
+
+              {defaultActions.view?.enabled && (
+                <Tooltip title="View" key="view">
+                  <IconButton
+                    size="small"
+                    onClick={defaultActions.view.onClick}
+                    sx={{ margin: "4px" }}
+                  >
+                    <RemoveRedEye fontSize="16px" />
                   </IconButton>
                 </Tooltip>
               )}

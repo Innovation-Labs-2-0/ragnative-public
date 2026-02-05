@@ -12,7 +12,7 @@ function DashboardLayer() {
     try {
       const response = await getRequest("/dashboard/get_update_statuses");
 
-      const colors = ["primary", "secondary", "info", "success", "warning", "error", "dark"];
+      const colors = ["primary", "secondary", "info", "success", "warning", "error"];
       const formattedPanels = [
         {
           title: "Recent Deployments",
@@ -23,7 +23,7 @@ function DashboardLayer() {
             return {
               avatar: item.avatar,
               title: `${item.name}`,
-              description: `${item.status} - ${humanizeTime(item.created_at)}`,
+              description: `${item.status} - ${humanizeTime(item.updated_at)}`,
               color: randomColor,
             };
           }),
