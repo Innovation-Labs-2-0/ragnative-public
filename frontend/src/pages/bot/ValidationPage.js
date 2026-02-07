@@ -73,7 +73,10 @@ function BotValidationPage({ onBack, onNext }) {
           severity: "success",
         });
       } else {
-        const msg = response?.message || "Validation failed. Please check configuration.";
+        const msg =
+          response?.errors?.[0]?.message ||
+          response?.message ||
+          "Validation failed. Please check configuration.";
         setError(msg);
         setSnackbar({
           open: true,

@@ -57,10 +57,7 @@ function collapseIconBox(theme, ownerState) {
   return {
     minWidth: pxToRem(32),
     minHeight: pxToRem(32),
-    color:
-      (transparentSidenav && !darkMode && !active) || (whiteSidenav && !active)
-        ? text.main
-        : text.main,
+    color: active ? text.secondary : darkMode ? white.main : text.main,
     borderRadius: borderRadius.md,
     display: "grid",
     placeItems: "center",
@@ -80,8 +77,8 @@ const collapseIcon = ({ palette: { white, gradients } }, { active }) => ({
 });
 
 function collapseText(theme, ownerState) {
-  const { typography, transitions, breakpoints, functions } = theme;
-  const { miniSidenav, transparentSidenav, active } = ownerState;
+  const { typography, palette, transitions, breakpoints, functions } = theme;
+  const { miniSidenav, transparentSidenav, darkMode, active } = ownerState;
 
   const { size, fontWeightRegular, fontWeightMedium } = typography;
   const { pxToRem } = functions;
@@ -98,7 +95,7 @@ function collapseText(theme, ownerState) {
         duration: transitions.duration.standard,
       }),
     },
-
+    color: active ? palette.text.secondary : darkMode ? palette.white.main : palette.text.main,
     "& span": {
       fontWeight: active ? fontWeightMedium : fontWeightRegular,
       fontSize: size.sm,

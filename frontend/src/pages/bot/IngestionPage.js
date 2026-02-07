@@ -5,6 +5,7 @@ import MDTypography from "components/style-components/MDTypography";
 import MDButton from "components/style-components/MDButton";
 import MDProgress from "components/style-components/MDProgress";
 import { postRequest, getRequest } from "utils/apiClient";
+import MDSnackbar from "components/style-components/MDSnackbar";
 import PropTypes from "prop-types";
 import { useBotContext } from "context/BotContext";
 import { useKnowledgeBaseContext } from "context/KnowledgeBaseContext";
@@ -15,7 +16,16 @@ function IngestBotPage({ onBack, onNext }) {
   const [error, setError] = useState("");
   const [botName, setBotName] = useState("BOT");
   const [botAvatar, setBotAvatar] = useState("");
-
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "info",
+    title: "",
+    icon: "",
+  });
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
   const {
     chatbotId: botId,
     ingestionCompleted: completed,
@@ -37,13 +47,24 @@ function IngestBotPage({ onBack, onNext }) {
     try {
       const data = await getRequest(`/ingestion/status/${knowledgeBaseId}`);
 
-      const { ingestion_status, ingestion_percent } = data || {};
+      const { ingestion_status, ingestion_percent, error_message } = data || {};
       setProgress(ingestion_percent);
       if (ingestion_status === "completed" || ingestion_status === "failed") {
         intervalId && clearInterval(intervalId);
         setIngesting(false);
         if (ingestion_status === "completed") {
           setCompleted(true);
+        } else if (ingestion_status === "failed") {
+          setError(error_message || "Ingestion failed. Please try again.");
+          const pathRegex = /[a-zA-Z]:\\\\(?:[^\\\\]+\\\\)+/g;
+          const cleaned_msg = error_message.replace(pathRegex, "");
+          setSnackbar({
+            open: true,
+            message: cleaned_msg || "Ingestion failed. Please try again.",
+            severity: "error",
+            title: "Ingestion Failed!",
+            icon: "home",
+          });
         }
       } else if (ingestion_status === "in progress") {
         setIngesting(true);
@@ -78,6 +99,7 @@ function IngestBotPage({ onBack, onNext }) {
   const getStatusText = () => {
     if (completed) return "Ingestion complete!";
     if (ingesting && progress > 0) return "Processing knowledge sources...";
+    if (error) return "Ingestion Failed!";
     if (ingesting) return "Starting ingestion...";
     return "Ready to ingest your bot’s knowledge base.";
   };
@@ -124,12 +146,16 @@ function IngestBotPage({ onBack, onNext }) {
           <MDBox mt={3}>
             <MDProgress
               variant="gradient"
-              color={completed ? "success" : "info"}
+              color={error ? "error" : completed ? "success" : "info"}
               value={progress}
               label
             />
             <MDTypography variant="caption" color="text">
-              {progress}% completed
+              {error
+                ? `Ingestion failed at ${progress}%.`
+                : completed
+                ? "Completed"
+                : `${progress}% completed`}
             </MDTypography>
           </MDBox>
 
@@ -158,14 +184,17 @@ function IngestBotPage({ onBack, onNext }) {
               )}
             </MDBox>
           </Grid>
-
-          {error && (
-            <MDTypography color="error" sx={{ mt: 2 }}>
-              {error}
-            </MDTypography>
-          )}
         </Grid>
       </Grid>
+      <MDSnackbar
+        color={snackbar.severity}
+        icon={snackbar.icon}
+        title={snackbar.title}
+        dateTime={new Date().toLocaleTimeString()}
+        content={snackbar.message}
+        open={snackbar.open}
+        close={handleCloseSnackbar}
+      />
     </MDBox>
   );
 }
