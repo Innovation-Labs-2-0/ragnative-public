@@ -10,14 +10,9 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    libreoffice \
-    libreoffice-writer \
-    libreoffice-calc \
-    libreoffice-impress \
-    fonts-dejavu \
-    fonts-liberation \
     && rm -rf /var/lib/apt/lists/*
 
+RUN pip install --no-cache-dir unoserver==3.0.1
 
 COPY <BACKEND_EXECUTABLE_NAME> /<BACKEND_EXECUTABLE_NAME>
 RUN chmod +x /<BACKEND_EXECUTABLE_NAME> 

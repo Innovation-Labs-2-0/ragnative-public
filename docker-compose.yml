@@ -37,12 +37,14 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - BASE_DIR=/backend/static
-      - SOFFICE_PATH=soffice
+      - SOFFICE_HOST=soffice
+      - SOFFICE_PORT=2003
       - PDF_CONVERSION_TIMEOUT=60
     depends_on:
       - mongo
       - redis
       - chromadb
+      - soffice
     dns:
       - 8.8.8.8
     networks:
@@ -52,6 +54,17 @@ services:
       - ./static:/backend/static
       - /sys/class/dmi/id:/sys/class/dmi/id:ro
       - /etc/machine-id:/etc/machine-id:ro
+
+  soffice:
+    image: ghcr.io/unoconv/unoserver-docker:0.4.3
+    container_name: ragnative-libreoffice
+    restart: always
+    ports:
+      - "2003:2003"
+    networks:
+      - app-network
+    volumes:
+      - ./static:/backend/static
 
   mongo:
     image: mongo:8.0.9
