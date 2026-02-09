@@ -1,0 +1,124 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ragnative-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://ragnative-backend:9000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: ragnative-backend
+    ports:
+      - "9000:9000"
+    environment:
+      - DATABASE_URL=mongodb://mongo:27017/rag_platform_dev
+      - DB_HOST=mongo
+      - DB_PORT=27017
+      - DATABASE_NAME=rag_platform_dev
+      - CHROMA_HTTP_HOST=chromadb
+      - CHROMA_HTTP_PORT=8000
+      - BASE_URL=http://<YOUR_SERVER_IP>:3000
+      - REDIS_URL=redis://redis:6379/0
+      - CHROMA_DB_URL=http://chromadb:8000
+      - CORS_ORIGINS=["http://<YOUR_SERVER_IP>:3000"]
+      - FERNET_KEY=w5bCO7jZ2w_YDCDJY0IMUzMDySFUQwUW6M2W9XBe8p0=
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - BASE_DIR=/backend/static
+      - SOFFICE_HOST=soffice
+      - SOFFICE_PORT=2003
+      - PDF_CONVERSION_TIMEOUT=60
+    depends_on:
+      - mongo
+      - redis
+      - chromadb
+      - soffice
+    dns:
+      - 8.8.8.8
+    networks:
+      - app-network
+    volumes:
+      - ./licenses:/licenses
+      - ./static:/backend/static
+      - /sys/class/dmi/id:/sys/class/dmi/id:ro
+      - /etc/machine-id:/etc/machine-id:ro
+
+  soffice:
+    image: ghcr.io/unoconv/unoserver-docker:0.4.3
+    container_name: ragnative-libreoffice
+    restart: always
+    ports:
+      - "2003:2003"
+    networks:
+      - app-network
+    volumes:
+      - ./static:/backend/static
+
+  mongo:
+    image: mongo:8.0.9
+    container_name: mongo_db
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: rag_platform_dev
+    volumes:
+      # Persistent data storage
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+
+      # Auto-run init scripts (for dump restoration)
+      - ./mongo-init:/docker-entrypoint-initdb.d/
+
+      # Mount dumps for restore
+      - ./dumps:/dumps:rw
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7.2
+    container_name: redis_server
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  chromadb:
+    image: chromadb/chroma:1.3.3
+    container_name: chroma_db
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/data
+    volumes:
+      - chroma_data:/chroma/data
+    networks:
+      - app-network
+
+# 🧩 Custom bridge network configuration
+networks:
+  app-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: appbridge # creates a bridge named "appbridge"
+
+# 🗄️ Persistent volumes
+volumes:
+  mongo_data:
+  chroma_data:
+  mongo_config:

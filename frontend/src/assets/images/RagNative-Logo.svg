@@ -1,0 +1,33 @@
+<svg width="360" height="90" viewBox="0 10 360 90" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left bracket -->
+  <path
+    d="M30 42 v36 M30 42 h16 M30 78 h16"
+    stroke="#60A5FA"
+    stroke-width="4"
+    fill="none"
+    stroke-linecap="round"
+  />
+  
+  <!-- Right bracket -->
+  <path
+    d="M70 42 v36 M70 42 h-16 M70 78 h-16"
+    stroke="#94A3B8"
+    stroke-width="4"
+    fill="none"
+    stroke-linecap="round"
+  />
+
+  <!-- Wordmark -->
+  <text
+    x="80"
+    y="66"
+    font-family="Inter, Segoe UI, Roboto, system-ui, sans-serif"
+    font-size="53"
+    font-weight="700"
+    fill="#abb2b9"
+    letter-spacing="-0.5"
+    dominant-baseline="middle"
+  >
+    Rag<tspan fill="#3B82F6">Native</tspan>
+  </text>
+</svg>
